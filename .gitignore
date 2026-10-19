@@ -1,0 +1,20 @@
+# XenForo core (never commit)
+xenforo/
+upload/
+*.zip
+src/
+js/
+styles/
+internal_data/
+data/
+
+# Secrets
+.env
+src/config.php
+*.pem
+*.key
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
