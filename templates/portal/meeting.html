@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card mb-4">
+    <div class="card-body">
+        <h2>📝 Запись на личный приём</h2>
+        <a href="https://forms.gle/mXbQM5bu6czHeLMCA" target="_blank" class="btn btn-warning mb-3">📜 Подать заявление об амнистии</a>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="name" class="form-control mb-2" placeholder="Имя / позывной" required>
+            <input type="tel" name="phone" class="form-control mb-2" placeholder="Телефон (10 цифр)" maxlength="10" required>
+            <input type="text" name="card_id" class="form-control mb-2" placeholder="ID карта" required>
+            <select name="topic" class="form-select mb-2" id="topicSelect">
+                <option>Бизнес-вопрос</option>
+                <option>Жалоба на действия госслужащих</option>
+                <option>Вопрос по недвижимости</option>
+                <option>Вопрос по законодательству</option>
+                <option>Встреча для мероприятия</option>
+                <option value="Другое">Другое</option>
+            </select>
+            <input type="text" name="custom_topic" class="form-control mb-2" id="customTopic" placeholder="Укажите причину" style="display:none">
+            <button class="btn btn-primary">Отправить заявку</button>
+        </form>
+    </div>
+</div>
+
+{% if user.is_authenticated and user.is_admin_role %}
+<div class="card">
+    <div class="card-body">
+        <h3>Заявки (админ)</h3>
+        {% for m in meetings %}
+            <div class="border p-2 mb-2">
+                <strong>{{ m.name }}</strong> · {{ m.phone }} · {{ m.topic }}
+                <span class="badge bg-info">{{ m.get_status_display }}</span>
+                <small class="text-muted">{{ m.created_at|date:"d.m.Y H:i" }}</small>
+            </div>
+        {% empty %}
+            <p>Нет заявок.</p>
+        {% endfor %}
+        <p class="small text-muted">Полное управление статусами — в <a href="/admin/portal/meeting/">админ-панели</a>.</p>
+    </div>
+</div>
+{% endif %}
+<script>
+document.getElementById('topicSelect').addEventListener('change', function() {
+    document.getElementById('customTopic').style.display = this.value === 'Другое' ? 'block' : 'none';
+});
+</script>
+{% endblock %}

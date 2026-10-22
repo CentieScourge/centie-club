@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h2>📜 Законодательство и документы</h2>
+        <p class="text-muted">Основные законы вынесены во внешние Google Docs (ссылки можно добавить в админке как документы).</p>
+        {% for d in documents %}
+            <div class="border-start border-3 ps-3 mb-3">
+                <small class="text-muted">{{ d.created_at|date:"d.m.Y" }}</small>
+                <h5>{{ d.title }}</h5>
+                <div>{{ d.text|linebreaks }}</div>
+                {% if d.google_doc_url %}
+                    <a href="{{ d.google_doc_url }}" target="_blank" class="btn btn-sm btn-outline-primary">Открыть в Google Docs</a>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>Документы пока не добавлены. Добавьте их через админ-панель.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

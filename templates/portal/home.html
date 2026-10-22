@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Главная — Мэрия Лос-Сантоса{% endblock %}
+{% block content %}
+<div class="card mb-4">
+    <div class="card-body">
+        <h2>Добро пожаловать в официальный портал мэрии</h2>
+        <p>Граждане Лос-Сантоса! Здесь вы можете ознакомиться с законами, подать заявку на аренду бизнеса, оставить отзыв или записаться на личный приём.</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h3>📰 Новости мэрии</h3>
+        {% for n in news_list %}
+            <div class="border-start border-3 border-warning ps-3 mb-3">
+                <small class="text-muted">{{ n.created_at|date:"d.m.Y H:i" }}</small>
+                <h5>{{ n.title }}</h5>
+                {% if n.image %}<img src="{{ n.image.url }}" class="img-fluid rounded mb-2" style="max-height:200px">{% elif n.image_url %}<img src="{{ n.image_url }}" class="img-fluid rounded mb-2" style="max-height:200px">{% endif %}
+                <div>{{ n.text|linebreaks }}</div>
+            </div>
+        {% empty %}
+            <p>Нет новостей.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h3>📊 Статистика города</h3>
+        <ul>
+            <li>🏪 Всего бизнесов: <strong>{{ total_business }}</strong></li>
+            <li>🟢 Доступно для аренды: <strong>{{ free_business }}</strong></li>
+            <li>📝 Принято отзывов: <strong>{{ review_count }}</strong></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

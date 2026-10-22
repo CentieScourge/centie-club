@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card mb-4">
+    <div class="card-body">
+        <h2>💬 Оставить отзыв</h2>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="name" class="form-control mb-2" placeholder="Ваше имя / позывной" value="Гражданин LS">
+            <textarea name="text" class="form-control mb-2" rows="3" placeholder="Отзыв..." required></textarea>
+            <button class="btn btn-primary">Отправить</button>
+        </form>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h3>Отзывы</h3>
+        {% for r in reviews %}
+            <div class="border-start border-3 ps-3 mb-3">
+                <strong>{{ r.name }}</strong> <small class="text-muted">{{ r.created_at|date:"d.m.Y H:i" }}</small>
+                <p>{{ r.text|linebreaks }}</p>
+                {% if r.answer %}
+                    <div class="bg-light p-2 rounded mt-2">
+                        <strong>Ответ администрации:</strong> {{ r.answer|linebreaks }}
+                        <small class="text-muted">{{ r.answer_date|date:"d.m.Y H:i" }}</small>
+                    </div>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>Пока нет отзывов.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

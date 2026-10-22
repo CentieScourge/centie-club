@@ -1,0 +1,15 @@
+[Unit]
+Description=Los Santos City Hall Gunicorn
+After=network.target postgresql.service
+
+[Service]
+User=cityhall
+Group=cityhall
+WorkingDirectory=/opt/cityhall
+Environment="PATH=/opt/cityhall/venv/bin"
+EnvironmentFile=/opt/cityhall/.env
+ExecStart=/opt/cityhall/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:8000 cityhall.wsgi:application
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

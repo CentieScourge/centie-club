@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card mb-4">
+    <div class="card-body">
+        <h2>🏢 Бизнесы и предприятия</h2>
+        <form method="get" class="row g-2 mb-3">
+            <div class="col-auto">
+                <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <option value="all" {% if current_status == 'all' %}selected{% endif %}>Все статусы</option>
+                    <option value="free" {% if current_status == 'free' %}selected{% endif %}>Свободен</option>
+                    <option value="occupied" {% if current_status == 'occupied' %}selected{% endif %}>Занят</option>
+                    <option value="pending" {% if current_status == 'pending' %}selected{% endif %}>В обработке</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <select name="type" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <option value="all" {% if current_type == 'all' %}selected{% endif %}>Все типы</option>
+                    <option value="СТО">СТО</option>
+                    <option value="Клуб">Клуб</option>
+                    <option value="Ресторан/Кафе">Ресторан/Кафе</option>
+                    <option value="Остальное">Остальное</option>
+                </select>
+            </div>
+        </form>
+
+        <div class="row">
+            {% for b in businesses %}
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        {% if b.image %}<img src="{{ b.image.url }}" class="card-img-top" style="height:160px;object-fit:cover">{% elif b.image_url %}<img src="{{ b.image_url }}" class="card-img-top" style="height:160px;object-fit:cover">{% endif %}
+                        <div class="card-body">
+                            <h5>{{ b.name }}</h5>
+                            <p class="small text-muted">📍 {{ b.address }}</p>
+                            <span class="badge bg-secondary">{{ b.get_type_display }}</span>
+                            <span class="badge {% if b.status == 'free' %}bg-success{% elif b.status == 'occupied' %}bg-danger{% else %}bg-warning{% endif %}">
+                                {{ b.get_status_display }}
+                            </span>
+                            <p class="mt-2">💰 {{ b.price }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Нет бизнесов по выбранным фильтрам.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h3>🏛️ Реестр частных организаций</h3>
+        <div class="row">
+            {% for o in orgs %}
+                <div class="col-md-6 mb-2">
+                    <div class="border rounded p-2">
+                        <strong>{{ o.name }}</strong><br>
+                        <small>👤 {{ o.founder }} · 📞 {{ o.phone }}</small>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Организаций пока нет.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

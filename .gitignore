@@ -1,20 +1,9 @@
-# XenForo core (never commit)
-xenforo/
-upload/
-*.zip
-src/
-js/
-styles/
-internal_data/
-data/
-
-# Secrets
+venv/
+__pycache__/
+*.pyc
+*.pyo
 .env
-src/config.php
-*.pem
-*.key
-
-# OS / IDE
+staticfiles/
+media/
+*.log
 .DS_Store
-.idea/
-.vscode/

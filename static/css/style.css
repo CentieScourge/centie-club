@@ -1,0 +1,64 @@
+body { background: #f4f6f8; }
+.card { border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.border-warning { border-color: #c9a87b !important; }
+.navbar-brand { font-weight: 700; }
+html.dark-theme {
+    background: #0f1724;
+    color: #e2e8f0;
+}
+html.dark-theme body {
+    background: #0f1724 !important;
+    color: #e2e8f0 !important;
+}
+html.dark-theme .navbar {
+    background: #1e293b !important;
+}
+html.dark-theme .card,
+html.dark-theme .card-body {
+    background: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+html.dark-theme footer {
+    color: #94a3b8 !important;
+}
+html.dark-theme .form-control,
+html.dark-theme .form-select {
+    background: #0f1724 !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+/* Тёмная тема — улучшения */
+html.dark-theme .btn-warning,
+body.dark-theme .btn-warning {
+    background: #f59e0b !important;
+    color: #0f1724 !important;
+    border-color: #f59e0b !important;
+    font-weight: 600;
+}
+html.dark-theme .btn-warning:hover {
+    background: #fbbf24 !important;
+    color: #0f1724 !important;
+}
+html.dark-theme p,
+html.dark-theme li,
+html.dark-theme label,
+html.dark-theme small {
+    color: #e2e8f0 !important;
+}
+html.dark-theme .text-muted {
+    color: #94a3b8 !important;
+}
+html.dark-theme a {
+    color: #93c5fd;
+}
+html.dark-theme a:hover {
+    color: #bfdbfe;
+}
+html.dark-theme .form-control::placeholder,
+html.dark-theme .form-select,
+html.dark-theme input::placeholder,
+html.dark-theme textarea::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1;
+}
