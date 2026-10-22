@@ -1,0 +1,41 @@
+# Los Santos City Hall portal - local/dev stack
+# Usage:
+#   cp .env.example .env   (set DB_HOST=db)
+#   docker compose up -d --build
+#   docker compose exec web python manage.py createsuperuser
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-cityhall}
+      POSTGRES_USER: ${DB_USER:-cityhall}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-change-me}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-cityhall} -d ${DB_NAME:-cityhall}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes:
+      - media:/app/media
+      - staticfiles:/app/staticfiles
+
+volumes:
+  pgdata:
+  media:
+  staticfiles:
